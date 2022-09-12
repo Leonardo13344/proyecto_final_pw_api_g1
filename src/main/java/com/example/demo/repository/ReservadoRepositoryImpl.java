@@ -29,7 +29,7 @@ public class ReservadoRepositoryImpl implements IReservadoRepository{
 	@Override
 	public Reservado find(Integer id) {
 		// TODO Auto-generated method stub
-		return this.find(id);
+		return this.em.find(Reservado.class,id);
 	}
 
 	@Override
@@ -40,6 +40,12 @@ public class ReservadoRepositoryImpl implements IReservadoRepository{
 		myQuery.setParameter("fechaI", fechaI);
 		myQuery.setParameter("fechaF", fechaF);
 		return myQuery.getResultList();
+	}
+
+	@Override
+	public void update(Reservado reservado) {
+		// TODO Auto-generated method stub
+		this.em.merge(reservado);
 	}
 
 }

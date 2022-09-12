@@ -18,7 +18,8 @@ public class VehiculoServiceImpl implements IVehiculoService {
 	@Override
 	public void insert(Vehiculo vehiculo) {
 		// TODO Auto-generated method stub
-		
+		vehiculo.setEstado("D");
+		this.vehiculoRepository.insert(vehiculo);
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
 	public Vehiculo findVehiByPlaca(String placa) {
 		// TODO Auto-generated method stub
 		Vehiculo aux = this.vehiculoRepository.findVehiByPlaca(placa);
-		return aux == null ? null : aux;
+		return aux;
 	}
 
 	

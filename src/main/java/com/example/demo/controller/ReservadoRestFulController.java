@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.repository.model.ReservaDTO;
 import com.example.demo.repository.model.Reservado;
 import com.example.demo.service.IReservadoService;
+import com.example.demo.service.to.ReservaTo;
 
 
 @RestController
@@ -26,18 +29,17 @@ public class ReservadoRestFulController {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	private ResponseEntity<Integer> insertReservado(@RequestBody ReservaDTO reservado) {
-		/*try {
-			Integer aux = this.reservadoService.insert(reservado, cedula, placa);
-			return ResponseEntity.ok(aux);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
-		}*/
 		Reservado re = new Reservado();
 		re.setFechaInicio(reservado.getFechaI());
 		re.setFechaFin(reservado.getFechaF());
 		Integer aux = this.reservadoService.insert(re, reservado.getCedula(), reservado.getPlaca());
 		return ResponseEntity.ok(aux);
-
+	}
+	
+	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, path="{numReserva}")
+	public ResponseEntity<ReservaTo> retirarVehiReservado(@PathVariable("numReserva") Integer id){
+		ReservaTo re = this.reservadoService.find(id);
+		return ResponseEntity.ok(re);
 	}
 
 }

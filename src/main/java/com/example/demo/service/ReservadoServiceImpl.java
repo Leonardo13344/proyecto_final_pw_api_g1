@@ -12,6 +12,7 @@ import com.example.demo.repository.model.Cliente;
 import com.example.demo.repository.model.Reservado;
 import com.example.demo.repository.model.Transaccion;
 import com.example.demo.repository.model.Vehiculo;
+import com.example.demo.service.to.ReservaTo;
 
 
 @Service
@@ -28,26 +29,6 @@ public class ReservadoServiceImpl implements IReservadoService{
 	
 	@Autowired
 	private ITransaccionService transaccionService;
-	
-	private Vehiculo existeYdisponible(String placa) {
-		try {
-			Vehiculo aux = this.vehiculoService.findVehiByPlaca(placa);
-			if (aux == null) {
-				throw new RuntimeException();
-			} else if (aux.getEstado().equals("D")) {
-				return aux;
-			} else {
-				throw new RuntimeException();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
-		}
-	}
-	
-	private Cliente existeCliente(String cedula) {
-		return this.clienteService.findByCedula(cedula);
-	}
 
 	@Override
 	public Integer insert(Reservado reservado, String cedula, String placa) {
@@ -80,10 +61,20 @@ public class ReservadoServiceImpl implements IReservadoService{
 	}
 
 	@Override
-	public Integer find(Integer id) {
+	public ReservaTo find(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		Reservado aux = this.reservadoRepository.find(id);
+		Reservado up = new Reservado();
+		Vehiculo vehi = new Vehiculo();
+		vehi = aux.getVehiculo();
+		vehi.setEstado("ND");
+		up = aux;
+		up.setEstado("E");
+		up.setVehiculo(vehi);
+		this.reservadoRepository.update(up);
+		return convertirReservaTo(up);
 	}
+	
 	
 	
 	private Transaccion fullTrans(Vehiculo ve, Cliente cl, Reservado re) {
@@ -102,6 +93,36 @@ public class ReservadoServiceImpl implements IReservadoService{
 		tran.setNumeroTarjeta(cl.getNumeroTarjeta());
 		tran.setNombreCli(cl.getNombre());
 		return tran;
+	}
+	
+	private ReservaTo convertirReservaTo(Reservado re) {
+		ReservaTo aux = new ReservaTo();
+		aux.setEstado(re.getEstado());
+		aux.setFecha(re.getFechaInicio().toString() + "-" + re.getFechaFin().toString());
+		aux.setModelo(re.getModeloVehi());
+		aux.setPlaca(re.getPlacaVehi());
+		aux.setReservadoPor(re.getCedulaCliente());
+		return aux;
+	}
+
+	private Vehiculo existeYdisponible(String placa) {
+		try {
+			Vehiculo aux = this.vehiculoService.findVehiByPlaca(placa);
+			if (aux == null) {
+				throw new RuntimeException();
+			} else if (aux.getEstado().equals("D")) {
+				return aux;
+			} else {
+				throw new RuntimeException();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+	}
+	
+	private Cliente existeCliente(String cedula) {
+		return this.clienteService.findByCedula(cedula);
 	}
 
 }

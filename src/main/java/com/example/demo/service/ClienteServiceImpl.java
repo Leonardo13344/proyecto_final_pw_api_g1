@@ -13,9 +13,15 @@ public class ClienteServiceImpl implements IClienteService{
 	private IClienteRepository clienteRepository;
 
 	@Override
-	public void insert(Cliente cliente) {
+	public void insertC(Cliente cliente) {
 		// TODO Auto-generated method stub
 		this.clienteRepository.insertC(cliente);
+	}
+	
+	@Override
+	public void insertE(Cliente cliente) {
+		// TODO Auto-generated method stub
+		this.clienteRepository.insertE(cliente);
 	}
 
 	@Override

@@ -10,4 +10,5 @@ public interface IReservadoRepository {
 	public void insert(Reservado reservado);
 	public Reservado find(Integer id);
 	public List<Reservado> findAll(LocalDate fechaI, LocalDate fechaF);
+	public void update(Reservado reservado);
 }
