@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.repository.model.Cliente;
 
 import com.example.demo.service.IClienteService;
+import com.example.demo.service.to.ClienteTo;
 
 @RestController
 @RequestMapping("/clientes")
@@ -49,9 +50,8 @@ public class ClienteRestFulController {
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Cliente> findByCedula(@RequestParam(value = "cedula") String cedula) {
-
-		Cliente aux = this.clienteService.findByCedula(cedula);
+	public ResponseEntity<ClienteTo> findByCedula(@RequestParam(value = "cedula") String cedula) {
+		ClienteTo aux = this.clienteService.findByCedulaTo(cedula);
 		return ResponseEntity.ok(aux);
 
 	}

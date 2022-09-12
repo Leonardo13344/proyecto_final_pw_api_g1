@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +49,7 @@ public class Vehiculo implements Serializable{
 	@Column(name = "vehi_valor_por_dia")
 	private BigDecimal valorPorDia;
 	
-	@OneToOne(mappedBy = "vehiculo")
+	@OneToOne(mappedBy = "vehiculo", fetch = FetchType.EAGER)
 	private Reservado reservado;
 	
 

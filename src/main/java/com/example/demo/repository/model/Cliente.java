@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,10 +46,10 @@ public class Cliente implements Serializable{
 	@Column(name = "clie_numero_tarjeta")
 	private String numeroTarjeta;
 	
-	@OneToOne(mappedBy = "cliente")
+	@OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private Reservado vehichuloReservado;
 	
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private List<Transaccion> transaccions;
 
 	public Integer getId() {

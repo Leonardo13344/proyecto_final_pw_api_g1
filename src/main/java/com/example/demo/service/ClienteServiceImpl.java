@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.IClienteRepository;
 import com.example.demo.repository.model.Cliente;
+import com.example.demo.service.to.ClienteTo;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
@@ -43,6 +44,28 @@ public class ClienteServiceImpl implements IClienteService{
 		Cliente aux = this.clienteRepository.findByCedula(cedula);
 		return aux;
 	}
+
+	@Override
+	public ClienteTo findByCedulaTo(String cedula) {
+		// TODO Auto-generated method stub
+		Cliente aux = this.clienteRepository.findByCedula(cedula);
+		return convertirClienteTo(aux);
+	}
+	
+	
+	private ClienteTo convertirClienteTo(Cliente cl) {
+		ClienteTo aux = new ClienteTo();
+		aux.setApellido(cl.getApellido());
+		aux.setCedula(cl.getCedula());
+		aux.setFechaN(cl.getFechaNacimiento().toString());
+		aux.setGenero(cl.getGenero());
+		aux.setNombre(cl.getNombre());
+		aux.setNumeroT(cl.getNumeroTarjeta());
+		aux.setRegistro(cl.getRegistro());
+		return aux;
+		
+	}
+	
 	
 	
 }
