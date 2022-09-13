@@ -15,4 +15,5 @@ public interface IReservadoService {
 	public ReservaTo find(Integer id);
 	public ReservaLinkTo findDetallado(Integer id);
 	public List<ReporteReservaTo> findAll(LocalDate fechaI, LocalDate fechaF);
+	public void updateTarjeta(String numTarjeta, String cedula);
 }

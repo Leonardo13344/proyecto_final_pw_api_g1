@@ -66,6 +66,17 @@ public class ReservadoRestFulController {
 		return this.reservadoService.findDetallado(numR);
 	}
 	
+	@PutMapping
+	private String updateClienteTarjeta(@RequestParam(value="cedula") String cedula, @RequestParam(value="numTar")String numT) {
+		try {
+			this.reservadoService.updateTarjeta(numT, cedula);
+			return "Tarjeta añadida correctamente...";
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "Error al ingresar tarjeta...";
+		}
+	}
+	
 	
 
 }

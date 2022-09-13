@@ -39,7 +39,7 @@ public class ReservadoServiceImpl implements IReservadoService{
 		// TODO Auto-generated method stub
 		Vehiculo aux = this.existeYdisponible(placa);
 		Cliente aux2 = this.existeCliente(cedula);
-		if(aux != null && aux2 != null) {
+		if(aux != null && aux2 != null && !aux2.getNumeroTarjeta().isEmpty() && aux2.getNumeroTarjeta().length() > 2 && aux2.getNumeroTarjeta() != null) {
 			reservado.setCedulaCliente(aux2.getCedula());
 			reservado.setNombreCliente(aux2.getNombre());
 			reservado.setCliente(aux2);
@@ -91,6 +91,14 @@ public class ReservadoServiceImpl implements IReservadoService{
 		// TODO Auto-generated method stub
 		Reservado aux = this.reservadoRepository.find(id);
 		return convertirReservaLinkTo(aux);
+	}
+	
+	@Override
+	public void updateTarjeta(String numTarjeta, String cedula) {
+		// TODO Auto-generated method stub
+		Cliente cl = this.clienteService.findByCedula(cedula);
+		cl.setNumeroTarjeta(numTarjeta);
+		this.clienteService.update(cl);
 	}
 	
 	private ReservaLinkTo convertirReservaLinkTo(Reservado re) {
@@ -164,6 +172,8 @@ public class ReservadoServiceImpl implements IReservadoService{
 	private Cliente existeCliente(String cedula) {
 		return this.clienteService.findByCedula(cedula);
 	}
+
+	
 
 	
 
