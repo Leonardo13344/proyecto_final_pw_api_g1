@@ -15,6 +15,7 @@ import com.example.demo.repository.model.Reservado;
 import com.example.demo.repository.model.Transaccion;
 import com.example.demo.repository.model.Vehiculo;
 import com.example.demo.service.to.ReporteReservaTo;
+import com.example.demo.service.to.ReservaLinkTo;
 import com.example.demo.service.to.ReservaTo;
 
 
@@ -85,8 +86,15 @@ public class ReservadoServiceImpl implements IReservadoService{
 		return aux.stream().map(r -> convertirReporteReservaTo(r)).collect(Collectors.toList());
 	}
 	
-	private ReporteReservaTo convertirReporteReservaTo(Reservado re) {
-		ReporteReservaTo aux = new ReporteReservaTo();
+	@Override
+	public ReservaLinkTo findDetallado(Integer id) {
+		// TODO Auto-generated method stub
+		Reservado aux = this.reservadoRepository.find(id);
+		return convertirReservaLinkTo(aux);
+	}
+	
+	private ReservaLinkTo convertirReservaLinkTo(Reservado re) {
+		ReservaLinkTo aux = new ReservaLinkTo();
 		aux.setCedulaCl(re.getCedulaCliente());
 		aux.setEstado(re.getEstado());
 		aux.setFechaF(re.getFechaFin().toString());
@@ -97,6 +105,14 @@ public class ReservadoServiceImpl implements IReservadoService{
 		aux.setNumReserva(re.getId());
 		aux.setPlacaVehi(re.getPlacaVehi());
 		aux.setTotalPagar(re.getTotalPagar());
+		return aux;
+	}
+	
+	private ReporteReservaTo convertirReporteReservaTo(Reservado re) {
+		ReporteReservaTo aux = new ReporteReservaTo();
+		aux.setCedulaCl(re.getCedulaCliente());
+		aux.setNumReserva(re.getId());
+		aux.setPlacaVehi(re.getPlacaVehi());
 		return aux;
 	}
 	
@@ -148,6 +164,8 @@ public class ReservadoServiceImpl implements IReservadoService{
 	private Cliente existeCliente(String cedula) {
 		return this.clienteService.findByCedula(cedula);
 	}
+
+	
 
 	
 
