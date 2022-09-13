@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.example.demo.repository.model.Cliente;
 import com.example.demo.repository.model.Reservado;
 import com.example.demo.repository.model.Transaccion;
 import com.example.demo.repository.model.Vehiculo;
+import com.example.demo.service.to.ReporteReservaTo;
 import com.example.demo.service.to.ReservaTo;
 
 
@@ -75,6 +78,27 @@ public class ReservadoServiceImpl implements IReservadoService{
 		return convertirReservaTo(up);
 	}
 	
+	@Override
+	public List<ReporteReservaTo> findAll(LocalDate fechaI, LocalDate fechaF) {
+		// TODO Auto-generated method stub
+		List<Reservado> aux = this.reservadoRepository.findAll(fechaI, fechaF);
+		return aux.stream().map(r -> convertirReporteReservaTo(r)).collect(Collectors.toList());
+	}
+	
+	private ReporteReservaTo convertirReporteReservaTo(Reservado re) {
+		ReporteReservaTo aux = new ReporteReservaTo();
+		aux.setCedulaCl(re.getCedulaCliente());
+		aux.setEstado(re.getEstado());
+		aux.setFechaF(re.getFechaFin().toString());
+		aux.setFechaI(re.getFechaInicio().toString());
+		aux.setMarcaVehi(re.getMarcaVehi());
+		aux.setModeloVehi(re.getModeloVehi());
+		aux.setNombreCl(re.getNombreCliente());
+		aux.setNumReserva(re.getId());
+		aux.setPlacaVehi(re.getPlacaVehi());
+		aux.setTotalPagar(re.getTotalPagar());
+		return aux;
+	}
 	
 	
 	private Transaccion fullTrans(Vehiculo ve, Cliente cl, Reservado re) {
@@ -124,5 +148,7 @@ public class ReservadoServiceImpl implements IReservadoService{
 	private Cliente existeCliente(String cedula) {
 		return this.clienteService.findByCedula(cedula);
 	}
+
+	
 
 }

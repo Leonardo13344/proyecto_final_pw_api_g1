@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +62,7 @@ public class ClienteServiceImpl implements IClienteService{
 		// TODO Auto-generated method stub
 		List<Cliente> aux = this.clienteRepository.findAll();
 		List<ClienteVipTo> aux2 = aux.stream().map(cl -> convertirClienteVipTo(cl)).collect(Collectors.toList());
-		return aux2.stream().sorted((x,y) -> x.getValorTotal().compareTo(y.getValorTotal())).collect(Collectors.toList());
+		return aux2.stream().sorted((x,y) -> y.getValorTotal().compareTo(x.getValorTotal())).collect(Collectors.toList());
 	}
 	
 	
