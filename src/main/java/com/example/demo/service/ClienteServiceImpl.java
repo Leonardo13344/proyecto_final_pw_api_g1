@@ -54,7 +54,12 @@ public class ClienteServiceImpl implements IClienteService{
 	public ClienteTo findByCedulaTo(String cedula) {
 		// TODO Auto-generated method stub
 		Cliente aux = this.clienteRepository.findByCedula(cedula);
-		return convertirClienteTo(aux);
+		if(aux != null) {
+			return convertirClienteTo(aux);
+		}else {
+			throw new RuntimeException();
+		}
+		
 	}
 	
 	@Override

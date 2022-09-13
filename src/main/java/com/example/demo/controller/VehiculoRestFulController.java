@@ -47,8 +47,13 @@ public class VehiculoRestFulController {
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{placa}")
 	public ResponseEntity<Vehiculo> findByPlaca(@PathVariable("placa") String placa) {
-		Vehiculo aux = this.vehiculoService.findVehiByPlaca(placa);
-		return ResponseEntity.ok(aux);
+		try {
+			Vehiculo aux = this.vehiculoService.findVehiByPlaca(placa);
+			return ResponseEntity.ok(aux);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+		}
 
 	}
 

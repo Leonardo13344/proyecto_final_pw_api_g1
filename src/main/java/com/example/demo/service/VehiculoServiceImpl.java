@@ -56,7 +56,12 @@ public class VehiculoServiceImpl implements IVehiculoService {
 	public Vehiculo findVehiByPlaca(String placa) {
 		// TODO Auto-generated method stub
 		Vehiculo aux = this.vehiculoRepository.findVehiByPlaca(placa);
-		return aux;
+		if(aux != null) {
+			return aux;
+		}else {
+			throw new RuntimeException();
+		}
+		
 	}
 
 	
