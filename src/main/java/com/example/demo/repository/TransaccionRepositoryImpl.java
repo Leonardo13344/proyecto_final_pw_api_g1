@@ -1,11 +1,11 @@
 package com.example.demo.repository;
 
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Repository;
-
 import com.example.demo.repository.model.Transaccion;
 
 @Repository
@@ -26,5 +26,7 @@ public class TransaccionRepositoryImpl implements ITransaccionRepository{
 		// TODO Auto-generated method stub
 		this.em.merge(transaccion);
 	}
+
+	
 
 }

@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.repository.model.Cliente;
 import com.example.demo.service.to.ClienteTo;
+import com.example.demo.service.to.ClienteVipTo;
 
 public interface IClienteService {
 
@@ -11,4 +14,5 @@ public interface IClienteService {
 	public Cliente findByCedula(String cedula);
 	public ClienteTo findByCedulaTo(String cedula);
 	public void insertE(Cliente cliente);
+	public List<ClienteVipTo> findAll();
 }

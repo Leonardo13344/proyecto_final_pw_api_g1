@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import com.example.demo.repository.model.Cliente;
 
 import com.example.demo.service.IClienteService;
 import com.example.demo.service.to.ClienteTo;
+import com.example.demo.service.to.ClienteVipTo;
 
 @RestController
 @RequestMapping("/clientes")
@@ -33,7 +36,6 @@ public class ClienteRestFulController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cliente no insertado...");
-
 		}
 	}
 
@@ -53,7 +55,11 @@ public class ClienteRestFulController {
 	public ResponseEntity<ClienteTo> findByCedula(@RequestParam(value = "cedula") String cedula) {
 		ClienteTo aux = this.clienteService.findByCedulaTo(cedula);
 		return ResponseEntity.ok(aux);
-
+	}
+	
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/vips")
+	private List<ClienteVipTo> findAll(){
+		return this.clienteService.findAll();
 	}
 
 }

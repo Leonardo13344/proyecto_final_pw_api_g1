@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -47,6 +49,14 @@ public class ClienteRepositoryImpl implements IClienteRepository{
 				.createQuery("SELECT v FROM Cliente v WHERE v.cedula =: cedulaD", Cliente.class);
 		myQuery.setParameter("cedulaD", cedulaD);
 		return myQuery.getResultList().isEmpty() ? null : myQuery.getSingleResult();
+	}
+
+	@Override
+	public List<Cliente> findAll() {
+		// TODO Auto-generated method stub
+		TypedQuery<Cliente> myQuery = this.em
+				.createQuery("SELECT v FROM Cliente v ", Cliente.class);
+		return myQuery.getResultList();
 	}
 
 }

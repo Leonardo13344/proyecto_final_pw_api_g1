@@ -1,11 +1,17 @@
 package com.example.demo.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.IClienteRepository;
 import com.example.demo.repository.model.Cliente;
+import com.example.demo.repository.model.Transaccion;
 import com.example.demo.service.to.ClienteTo;
+import com.example.demo.service.to.ClienteVipTo;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
@@ -52,6 +58,14 @@ public class ClienteServiceImpl implements IClienteService{
 		return convertirClienteTo(aux);
 	}
 	
+	@Override
+	public List<ClienteVipTo> findAll() {
+		// TODO Auto-generated method stub
+		List<Cliente> aux = this.clienteRepository.findAll();
+		List<ClienteVipTo> aux2 = aux.stream().map(cl -> convertirClienteVipTo(cl)).collect(Collectors.toList());
+		return aux2.stream().sorted((x,y) -> x.getValorTotal().compareTo(y.getValorTotal())).collect(Collectors.toList());
+	}
+	
 	
 	private ClienteTo convertirClienteTo(Cliente cl) {
 		ClienteTo aux = new ClienteTo();
@@ -65,6 +79,21 @@ public class ClienteServiceImpl implements IClienteService{
 		return aux;
 		
 	}
+	
+	private ClienteVipTo convertirClienteVipTo(Cliente cl) {
+		ClienteVipTo aux = new ClienteVipTo();
+		aux.setCedula(cl.getCedula());
+		Double sumTotal = (double) 0;
+		Double sumIva = (double) 0;
+		for (Transaccion t : cl.getTransaccions()) {
+			sumTotal =+ t.getValorTotalAPagar().doubleValue();
+			sumIva =+ t.getValorIva().doubleValue();
+		}
+		aux.setValorTotal(sumTotal);
+		aux.setValorIva(sumIva);
+		return aux;
+	}
+
 	
 	
 	

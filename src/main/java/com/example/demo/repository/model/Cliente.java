@@ -46,8 +46,8 @@ public class Cliente implements Serializable{
 	@Column(name = "clie_numero_tarjeta")
 	private String numeroTarjeta;
 	
-	@OneToOne(mappedBy = "cliente", fetch = FetchType.EAGER)
-	private Reservado vehichuloReservado;
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+	private List<Reservado> vehichuloReservado;
 	
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private List<Transaccion> transaccions;
@@ -116,11 +116,11 @@ public class Cliente implements Serializable{
 		this.numeroTarjeta = numeroTarjeta;
 	}
 
-	public Reservado getVehichuloReservado() {
+	public List<Reservado> getVehichuloReservado() {
 		return vehichuloReservado;
 	}
 
-	public void setVehichuloReservado(Reservado vehichuloReservado) {
+	public void setVehichuloReservado(List<Reservado> vehichuloReservado) {
 		this.vehichuloReservado = vehichuloReservado;
 	}
 

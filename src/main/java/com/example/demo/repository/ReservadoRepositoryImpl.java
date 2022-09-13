@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.repository.model.Reservado;
-import com.example.demo.repository.model.Vehiculo;
+
 
 @Repository
 @Transactional
